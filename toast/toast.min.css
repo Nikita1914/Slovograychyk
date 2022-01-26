@@ -1,0 +1,103 @@
+:root{
+	--toast-width:270px;
+	--toast-border-radius:0.80rem;
+	--toast-theme-default:#fff;
+	--toast-theme-primary:#0d6efd;
+	--toast-theme-secondary:#6c757d;
+	--toast-theme-success:#198754;
+	--toast-theme-danger:#dc3545;
+	--toast-theme-warning:#ffc107;
+	--toast-theme-info:#0dcaf0;
+	--toast-theme-light:#f8f9fa;
+	--toast-theme-dark:#212529
+}
+
+.toast-container{
+	position:fixed;
+	top:20%;
+	right:10px;
+	width:var(--toast-width)
+}
+
+.toast{
+	font-size:20px;
+	background-clip:padding-box;
+	border:1px solid rgba(0,0,0,.05);
+	border-radius:var(--toast-border-radius);
+	box-shadow:0 .125rem .25rem rgba(0,0,0,.075);
+	display:none;
+	position:relative;
+	overflow:hidden
+}
+
+.toast_default{
+	color:#212529;
+	background-color:var(--toast-theme-default)
+}
+
+.toast_primary{
+	color:#fff;
+	background-color:var(--toast-theme-primary)
+}
+
+.toast_secondary{
+	color:#fff;
+	background-color:var(--toast-theme-secondary)
+}
+
+.toast_success{
+	color:#fff;
+	background-color:var(--toast-theme-success)
+}
+
+.toast_danger{
+	color:#fff;
+	background-color:var(--toast-theme-danger)
+}
+
+.toast_warning{
+	color:#212529;
+	background-color:var(--toast-theme-warning)
+}
+
+.toast_info{
+	color:#212529;
+	background-color:var(--toast-theme-info)
+}
+
+.toast_light{
+	color:#212529;
+	background-color:var(--toast-theme-light)
+}
+
+.toast_dark{
+	color:#fff;
+	background-color:var(--toast-theme-dark)
+}
+
+.toast_danger .toast__close, .toast_dark .toast__close, .toast_primary .toast__close, .toast_secondary .toast__close, .toast_success .toast__close{
+	filter:invert(1)
+}
+
+.toast:not(:last-child){
+	margin-bottom:.75rem
+}
+
+.toast_show{
+	display:block
+}
+
+.toast__header{
+	position:relative;
+	padding:.5rem 2.25rem .5rem 1rem;
+	background-color:rgba(0,0,0,.03);
+	border-bottom:1px solid rgba(0,0,0,.05)
+}
+
+.toast__body{
+	padding:1rem
+}
+
+.toast_message .toast__body{
+	padding-right:2.25rem
+}
