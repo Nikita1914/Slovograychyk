@@ -1,0 +1,169 @@
+html {
+	box-sizing: border-box;
+}
+
+body {
+	background-image: url(images/bg.jpg);
+}
+
+.game-content {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.title-game {
+	text-align: center;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.title-letter, .title-letter-small {
+	margin: 1px;
+	border: none;
+	border-radius: 10px 10px 10px 10px;
+	text-align: center;
+	color: white;
+	display: inline-block;
+}
+
+.title-letter {
+	background: linear-gradient(crimson, gold, yellowgreen, teal, crimson);
+	background-position: 0 0;
+	animation: background 24s infinite alternate;
+}
+
+.title-letter-small {
+	font-family: 'Latin', sans-serif;
+	font-size: 40px;
+	padding: 10px;
+}
+
+@keyframes background {
+	  100% {
+	    background-position: 0 200px;
+	  }
+}
+
+.tile {
+	border-radius: 10px 10px 10px 10px;
+	text-align: center;
+}
+
+.button-keyboard:active {
+		opacity: .3;
+}
+
+.button-keyboard:focus {
+    outline: none;
+}
+
+.grid {
+	box-sizing: inherit;
+}
+
+@media (min-width: 1090px) {
+	.tiles {
+		max-width: 360px;
+	}
+
+	.tiles-line .tile {
+		width: 66px;
+		float: left;
+	}
+
+	.title-letter{
+		width: 20px;
+		height: 30px;
+		font-size: 24px;
+		padding: 20px;
+	}
+
+	.tile {
+		float: left;
+		margin: 3px;
+		min-width: 64px;
+		min-height: 64px;
+		font-size: 50px;
+		background-color: white;
+	}
+
+	.keyboard {
+		text-align: center;
+		margin-top: 120px;
+	}
+
+	.button-keyboard {
+		width: 50px;
+		height: 70px;
+		margin: 2px;
+		font-size: 30px;
+		border: none;
+		background-color: white;
+		border-radius: 10px 10px 10px 10px;
+		text-align: center;
+	}
+
+	#enter-button {
+		width: 200px !important;
+		text-align: center;
+		margin-left: 2%;
+	}
+}
+
+@media (max-width: 1089px){
+	.tiles-line .tile{
+		width: 60px;
+		float: left;
+	}
+
+	.title-letter {
+		width: 20px;
+		height: 20px;
+		font-size: 20px;
+		padding: 16px;
+	}
+
+	.tiles {
+		max-width: 320px;
+		margin-left: auto;
+		margin-right: auto;	
+	}
+
+	.tiles::after {
+		display: table;
+		clear: both;
+		content: '';
+	}
+
+	.tile {
+		margin: 2px;
+		min-height: 40px;
+		font-size: 30px;
+		background-color: white;
+	}
+
+
+	.keyboard {
+		clear: both;
+		text-align: center;
+		margin-top: 14px;
+	}
+
+	.button-keyboard {
+		width: 22px;
+		height: 42px;
+		margin: 1px;
+		font-size: 16px;
+		border: none;
+		background-color: white;
+		border-radius: 8px 8px 8px 8px;
+		text-align: center;
+	}
+
+	#enter-button {
+		width: 200px !important;
+	}
+}
