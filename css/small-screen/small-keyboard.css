@@ -1,0 +1,22 @@
+@media (max-width: 1089px){
+	.keyboard{
+		clear: both;
+		text-align: center;
+		margin-top: 14px;
+	}
+
+	.button-keyboard{
+		width: 22px;
+		height: 42px;
+		margin: 1px;
+		font-size: 16px;
+		border: none;
+		background-color: white;
+		border-radius: 8px 8px 8px 8px;
+		text-align: center;
+	}
+
+	#enter-button{
+		width: 200px !important;
+	}
+}

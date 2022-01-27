@@ -1,0 +1,17 @@
+html {
+	box-sizing: border-box;
+}
+
+.grid{
+	box-sizing: inherit;
+}
+
+.tiles{
+	max-width: 350px;
+}
+
+.tiles-line .tile{
+	width: 66px;
+	float: left;
+}
+

@@ -1,0 +1,49 @@
+body {
+	background-image: url(../images/bg.jpg);
+}
+
+.game-content{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.title-game{
+	text-align: center;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.title-letter{
+	margin: 1px;
+	border: none;
+	border-radius: 10px 10px 10px 10px;
+	text-align: center;
+	color: white;
+	display: inline-block;
+	background: linear-gradient(crimson, gold, yellowgreen, teal, crimson);
+	background-position: 0 0;
+	animation: background 24s infinite alternate;
+}
+
+@keyframes background {
+	  100% {
+	    background-position: 0 200px;
+	  }
+}
+
+.tile{
+	margin: 2px;
+	border-radius: 10px 10px 10px 10px;
+	text-align: center;
+}
+
+.button-keyboard:active{
+		opacity: .3;
+}
+
+.button-keyboard:focus {
+    outline: none;
+}

@@ -3,15 +3,19 @@ const GRAY_COLOR = 'gray'
 const YELLOW_COLOR = 'yellow'
 const GREEN_COLOR = 'green'
 
-let matrix = [[0, 0, 0, 0, 0],
+let board = [[0, 0, 0, 0, 0],
 							[0, 0, 0, 0, 0],
 							[0, 0, 0, 0, 0],
 							[0, 0, 0, 0, 0],
 							[0, 0, 0, 0, 0],
 							[0, 0, 0, 0, 0]
 						 ];
-let line_in_matrix = 0;
-let column_in_matrix = 0;
+let keyboard = {'Й':0, 'Ц':0, 'У':0, 'К':0, 'Е':0, 'Н':0, 'Г':0, 'Ш':0, 'Щ':0, 'З':0, 'Х':0,
+								'Ї':0, 'Ф':0, 'І':0, 'В':0, 'А':0, 'П':0, 'Р':0, 'О':0, 'Л':0, 'Д':0, 'Ж':0, 
+								'Є':0, 'Я':0, 'Ч':0, 'С':0, 'М':0, 'И':0, 'Т':0, 'Ь':0, 'Б':0, 'Ю':0};
+let entered_words = [];
+let line_in_board = 0;
+let column_in_board = 0;
 let user_word = [];
 let hidden_word = '';
 let end_game = false;
@@ -55,40 +59,44 @@ function button_clicked(letter){
 	}
 
 	if (letter.toUpperCase() === 'ENTER'){
-		word_entered()		
+		word_entered();
 	} else if (letter.toUpperCase() === 'BACKSPACE'){		
 		backspace_pressed();
-	} else if (column_in_matrix < 5){
-		document.getElementById(`tile-${line_in_matrix}-${column_in_matrix}`).innerHTML = letter;
+	} else if (column_in_board < 5){
+		document.getElementById(`tile-${line_in_board}-${column_in_board}`).innerHTML = letter;
 		user_word.push(letter.toLowerCase());
-		column_in_matrix++;
+		column_in_board++;
 	}
 }
 
 function backspace_pressed() {
-	if (column_in_matrix > 0){	
+	if (column_in_board > 0){	
 		user_word = user_word.slice(0, -1);
 		
-		column_in_matrix--;
-		document.getElementById(`tile-${line_in_matrix}-${column_in_matrix}`).innerHTML = ' ';
+		column_in_board--;
+		document.getElementById(`tile-${line_in_board}-${column_in_board}`).innerHTML = ' ';
 	}
 }
 
 function word_entered() {
-	if (column_in_matrix === 5) {
+	if (column_in_board === 5) {
 		if(check_user_word()){
+			entered_words.push(user_word);
 			let number_of_coincidences = word_match_count();
 			
 			if (number_of_coincidences === 5){
 				toast('Ви вгадали!');
+				clear_save_game();
 				end_game = true;
 			} else {
-				if (line_in_matrix != 5){
-					line_in_matrix ++;
-					column_in_matrix = 0;
+				if (line_in_board != 5){
+					line_in_board ++;
+					column_in_board = 0;
 					user_word = [];
+					save_game();
 				} else {
 					toast(`Ви програли. Загадане слово: ${hidden_word.join('')}.`);
+					clear_save_game();
 					end_game = true;
 				}
 			}
@@ -114,15 +122,15 @@ function word_match_count() {
 	let old_hidden_word = JSON.parse(JSON.stringify(hidden_word));
 	let number_of_coincidences = 0;
 	let count_yellow;
-	let button;
+	let color;
 
 	// Match green letter 
 	for(let i = 0; i < hidden_word.length; i++){
 		if(user_word[i] === hidden_word[i]){
-			// rotate_tile(get_tile(line_in_matrix, i));
-			// setTimeout((a, b) => {set_color_tile(a, b, 'green');}, 1500, line_in_matrix, i);
-			set_color_tile(line_in_matrix, i, 'green');
-			document.querySelector(`.button-keyboard[data-letter=${user_word[i].toUpperCase()}]`).style.background = 'green';
+			// rotate_tile(get_tile(line_in_board, i));
+			// setTimeout((a, b) => {set_color_tile(a, b, 'green');}, 1500, line_in_board, i);
+			set_color_tile(line_in_board, i, 'green');
+			set_color_button(user_word[i], 'green');
 			hidden_word[i] = '0';
 			number_of_coincidences++;
 		} 
@@ -133,27 +141,27 @@ function word_match_count() {
 		count_yellow = count_yellow_letter(user_word[i]);
 
 		if (count_yellow.length > 0) {
-			if (get_color_tile(line_in_matrix, i) != 'green'){
+			if (get_color_tile(line_in_board, i) != 'green'){
 				hidden_word[count_yellow[0]] = '0';
-				set_color_tile(line_in_matrix, i, 'yellow');
-				button = document.querySelector(`.button-keyboard[data-letter=${user_word[i].toUpperCase()}]`);
+				set_color_tile(line_in_board, i, 'yellow');
 				
-				if (button.style.background != 'green')
-					button.style.background = 'yellow';
+				if (get_color_button(user_word[i]) != 'green')
+					set_color_button(user_word[i], 'yellow');
 			}
 		} else {
-			if (get_color_tile(line_in_matrix, i) != 'green'){
-				set_color_tile(line_in_matrix, i, 'gray')
+			if (get_color_tile(line_in_board, i) != 'green'){
+				set_color_tile(line_in_board, i, 'gray');
 
-				button = document.querySelector(`.button-keyboard[data-letter=${user_word[i].toUpperCase()}]`);
+				color = get_color_button(user_word[i]);
 				
-				if ((button.style.background != 'green') && (button.style.background != 'yellow'))
-					button.style.background = 'gray';
+				if ((color != 'green') && (color != 'yellow'))
+					set_color_button(user_word[i], 'gray');
 			}
 		}
 	}
 	
-	sync_matrix()
+	sync_board();
+	sync_keyboard();
 	hidden_word = old_hidden_word;
 	return number_of_coincidences;
 }
@@ -211,16 +219,20 @@ function reset_game() {
 		rotate_tile(tile);
 	});
 
-	line_in_matrix = 0;
-	column_in_matrix = 0;
+	line_in_board = 0;
+	column_in_board = 0;
 	user_word = [];
-	matrix = [[0, 0, 0, 0, 0],
+	board = [[0, 0, 0, 0, 0],
 						[0, 0, 0, 0, 0],
 						[0, 0, 0, 0, 0],
 						[0, 0, 0, 0, 0],
 						[0, 0, 0, 0, 0],
 						[0, 0, 0, 0, 0]
 					 ];
+	keyboard = {'Й':0, 'Ц':0, 'У':0, 'К':0, 'Е':0, 'Н':0, 'Г':0, 'Ш':0, 'Щ':0, 'З':0, 'Х':0,
+							'Ї':0, 'Ф':0, 'І':0, 'В':0, 'А':0, 'П':0, 'Р':0, 'О':0, 'Л':0, 'Д':0, 'Ж':0, 
+							'Є':0, 'Я':0, 'Ч':0, 'С':0, 'М':0, 'И':0, 'Т':0, 'Ь':0, 'Б':0, 'Ю':0};
+	entered_words = [];
 }
 
 function rotate_tile(tile){
@@ -253,11 +265,11 @@ function set_color_tile(tile_row, tile_column, color) {
 	}
 
 
-	matrix[tile_row][tile_column] = color;
+	board[tile_row][tile_column] = color;
 }
 
 function get_color_tile(tile_row, tile_column) {
-	color =  matrix[tile_row][tile_column];
+	color =  board[tile_row][tile_column];
 
 	switch (color){
 		case 0: 
@@ -277,14 +289,14 @@ function get_color_tile(tile_row, tile_column) {
 	return color;
 }
 
-function sync_matrix(){
+function sync_board(){
 	let tile = null;
 
-	for (let i = 0; i < matrix.length; i++){
-		for (let j = 0; j < matrix[i].length; j++){
+	for (let i = 0; i < board.length; i++){
+		for (let j = 0; j < board[i].length; j++){
 			tile = document.getElementById(`tile-${i}-${j}`)
 
-			switch (matrix[i][j]){
+			switch (board[i][j]){
 				case 0: 
 					tile.style.background = WHITE_COLOR;
 					break;
@@ -302,4 +314,116 @@ function sync_matrix(){
 	}
 }
 
-make_a_word();
+function set_color_button(letter, color) {
+	switch (color){
+		case 'white': 
+			color = 0;
+			break;
+		case 'gray':
+			color = 1;
+			break;
+		case 'yellow':
+			color = 2;
+			break;		
+		case 'green':
+			color = 3;
+			break;
+	}
+
+	keyboard[letter.toUpperCase()] = color;
+}
+
+function get_color_button(letter) {
+		let color = keyboard[letter.toUpperCase()];
+
+		switch (color){
+			case 0: 
+				color = 'white';
+				break;
+			case 1:
+				color = 'gray';
+				break;
+			case 2:
+				color = 'yellow';
+				break;		
+			case 3:
+				color = 'green';
+				break;
+	}
+
+	return color;
+}
+
+function sync_keyboard() {
+	let color = null;
+
+	for(let key in keyboard){
+		switch (keyboard[key]){
+			case 0: 
+				color = WHITE_COLOR;
+				break;
+			case 1:
+				color = GRAY_COLOR;
+				break;
+			case 2:
+				color = YELLOW_COLOR;
+				break;		
+			case 3:
+				color = GREEN_COLOR;
+				break;
+			}
+
+		document.querySelector(`.button-keyboard[data-letter=${key.toUpperCase()}]`).style.background = color;
+	}
+}
+
+function save_game(){
+	let my_storage = localStorage;
+	
+	my_storage.setItem('board', JSON.stringify(board));
+	my_storage.setItem('keyboard', JSON.stringify(keyboard));
+	my_storage.setItem('entered_words', JSON.stringify(entered_words));
+	my_storage.setItem('hidden_word', JSON.stringify(hidden_word));
+	my_storage.setItem('line_in_board', line_in_board);
+	my_storage.setItem('save', 'true');
+}
+
+function load_game(){
+	let my_storage = localStorage;
+
+	if (my_storage.getItem('save') != undefined){
+		board = JSON.parse(my_storage.getItem('board'));
+		keyboard = JSON.parse(my_storage.getItem('keyboard'));
+		entered_words = JSON.parse(my_storage.getItem('entered_words'));
+		hidden_word = JSON.parse(my_storage.getItem('hidden_word'));
+		line_in_board = Number(my_storage.getItem('line_in_board'));
+
+		for (let i = 0; i < entered_words.length; i++){
+			for (let j = 0; j < entered_words[i].length; j++){
+				document.getElementById(`tile-${i}-${j}`).innerHTML = entered_words[i][j].toUpperCase();
+			}
+		}
+
+		sync_board();
+		sync_keyboard();
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function clear_save_game(){
+	let my_storage = localStorage;
+	my_storage.clear();
+}
+
+console.log('-------Запуск гри-------')
+let game_loaded = load_game()
+
+if (game_loaded == false){
+	console.log('Гру не було збережено');
+	make_a_word();
+} else {
+	console.log('Гру було завантажено');
+}
