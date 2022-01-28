@@ -2,6 +2,7 @@ const WHITE_COLOR = 'white'
 const GRAY_COLOR = 'gray'
 const YELLOW_COLOR = 'yellow'
 const GREEN_COLOR = 'green'
+const TILE_ROTATE_TIME = 2;
 
 let board = [[0, 0, 0, 0, 0],
 						 [0, 0, 0, 0, 0],
@@ -48,6 +49,28 @@ document.addEventListener('keydown', (event) => {
 	}
 });
 
+document.querySelectorAll('.tile').forEach((tile) => {
+	tile.onclick = () => {
+		let tile_id = tile.id.replace('tile-', '').split('-');
+		let state_tile = board[tile_id[0]][tile_id[1]];
+		let letter = tile.innerHTML;
+
+		if (state_tile != 0){
+			switch (state_tile){
+				case 1:
+					toast(`У таємному слові нема букви "${letter.toUpperCase()}".`);
+					break;
+				case 2:
+					toast(`Буква "${letter.toUpperCase()}" є у таємному слові, але не на цій позиції.`);
+					break;
+				case 3:
+					toast(`Буква "${letter.toUpperCase()}" є у таємному слові, і стоїть на вірній позиції.`);
+					break;
+			}
+		}
+	}
+});
+
 function button_clicked(letter){
 	if (lock_buttons)
 		return;
@@ -74,7 +97,7 @@ function backspace_pressed() {
 		user_word = user_word.slice(0, -1);
 		
 		column_in_board--;
-		document.getElementById(`tile-${line_in_board}-${column_in_board}`).innerHTML = ' ';
+		document.getElementById(`tile-${line_in_board}-${column_in_board}`).innerHTML = '';
 	}
 }
 
@@ -195,7 +218,7 @@ function make_a_word(){
 		}
 	}
 
-	console.log('Загадане слово: ', hidden_word);
+	console.log('Таємне слово: ', hidden_word);
 	hidden_word = hidden_word.split('')
 }
 
@@ -215,7 +238,7 @@ function reset_game() {
 	});
 
 	document.querySelectorAll('.tile').forEach((tile) => {
-		setTimeout(() => {tile.style.background = 'white'; tile.innerHTML = ' ';}, 1000)
+		setTimeout(() => {tile.style.background = 'white'; tile.innerHTML = '';}, 1000)
 		rotate_tile(tile);
 	});
 
@@ -237,7 +260,7 @@ function reset_game() {
 
 function rotate_tile(tile){
 	lock_buttons = true;
-	tile.style.transition = 'transform 2s linear';
+	tile.style.transition = `transform ${TILE_ROTATE_TIME}s linear`;
 
 	tile.style.transform = 'rotate3d(1, 0, 0, 180deg)';
 	
@@ -403,7 +426,6 @@ function load_game(){
 				document.getElementById(`tile-${i}-${j}`).innerHTML = entered_words[i][j].toUpperCase();
 			}
 		}
-
 		sync_board();
 		sync_keyboard();
 
@@ -418,12 +440,10 @@ function clear_save_game(){
 	my_storage.clear();
 }
 
-console.log('-------Запуск гри-------')
 let game_loaded = load_game()
 
 if (game_loaded == false){
-	console.log('Гру не було збережено');
 	make_a_word();
 } else {
-	console.log('Гру було завантажено');
+	console.log('Завантажене слово:', hidden_word.join(''));
 }
