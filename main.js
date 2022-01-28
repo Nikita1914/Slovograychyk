@@ -20,7 +20,7 @@ let column_in_board = 0;
 let user_word = [];
 let hidden_word = '';
 let end_game = false;
-let lock_buttons = false;
+let lock_buttons = false
 
 document.querySelectorAll('.button-keyboard').forEach(function(button) {
 	button.onclick = () => {
@@ -28,6 +28,7 @@ document.querySelectorAll('.button-keyboard').forEach(function(button) {
 		button_clicked(button.dataset.letter);
 	}
 });
+
 
 document.addEventListener('keydown', (event) => {
 	if (lock_buttons)
@@ -72,7 +73,7 @@ document.querySelectorAll('.tile').forEach((tile) => {
 });
 
 function button_clicked(letter){
-	if (lock_buttons)
+	if (lock_buttons || letter === undefined)
 		return;
 	
 	if (end_game){
@@ -118,7 +119,7 @@ function word_entered() {
 					user_word = [];
 					save_game();
 				} else {
-					toast(`Ви програли. Загадане слово: ${hidden_word.join('')}.`);
+					toast(`Ви програли. Таємне слово: ${hidden_word.join('')}.`);
 					clear_save_game();
 					end_game = true;
 				}
@@ -150,8 +151,6 @@ function word_match_count() {
 	// Match green letter 
 	for(let i = 0; i < hidden_word.length; i++){
 		if(user_word[i] === hidden_word[i]){
-			// rotate_tile(get_tile(line_in_board, i));
-			// setTimeout((a, b) => {set_color_tile(a, b, 'green');}, 1500, line_in_board, i);
 			set_color_tile(line_in_board, i, 'green');
 			set_color_button(user_word[i], 'green');
 			hidden_word[i] = '0';
@@ -439,6 +438,38 @@ function clear_save_game(){
 	let my_storage = localStorage;
 	my_storage.clear();
 }
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement &&
+      !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {      
+      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+}
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+	document.getElementById('fullscreen-button').onclick = toggleFullScreen;
+} else {
+	document.getElementById('fullscreen-button').style.display = 'none'
+}
+
 
 let game_loaded = load_game()
 

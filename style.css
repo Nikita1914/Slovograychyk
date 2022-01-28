@@ -151,6 +151,12 @@ body {
 	.keyboard {
 		clear: both;
 		text-align: center;
+		position: absolute;
+		left: 0; 
+  	right: 0; 
+  	margin-left: auto; 
+  	margin-right: auto; 
+  	bottom: 10px;
 		margin-top: 14px;
 	}
 
@@ -171,5 +177,20 @@ body {
 
 	#enter-button {
 		width: 200px !important;
+	}
+
+	.button-settings {
+		width: 50px;
+		height: 30px;
+		margin: 1px;
+		border: none;
+		background-color: white;
+		border-radius: 8px 8px 8px 8px;
+		text-align: center;
+	}
+
+	#fullscreen-button > img {
+		display: block;
+		margin: 0 auto;
 	}
 }
