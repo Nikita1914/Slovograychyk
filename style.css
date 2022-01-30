@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
 
 html {
-	box-sizing: border-box;
-}
-
-body {
-	background-image: url(images/bg.jpg);
-}
-
-.game-content {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+body {
+	background-image: url(images/bg.webp);
+}
+
+.game-content {
+	box-sizing: border-box;
 }
 
 .title-game {
@@ -66,6 +66,16 @@ body {
 	box-sizing: inherit;
 }
 
+.button-share {
+	display: block;
+	border-radius: 40px 40px 40px 40px;
+	border: none;
+	position: fixed;
+	right: 5px;
+	bottom: 5px;
+  outline: none;
+}
+
 @media (min-width: 1090px) {
 	.tiles {
 		max-width: 360px;
@@ -113,6 +123,16 @@ body {
 		text-align: center;
 		margin-left: 2%;
 	}
+
+	.button-share {
+		width: 80px;
+		height: 80px;
+	}
+
+	.button-share > img {
+		width: 40px;
+		height: 40px;
+	}
 }
 
 @media (max-width: 1089px){
@@ -131,7 +151,7 @@ body {
 	.tiles {
 		max-width: 320px;
 		margin-left: auto;
-		margin-right: auto;	
+		margin-right: auto;
 	}
 
 	.tiles::after {
@@ -161,7 +181,7 @@ body {
 	}
 
 	.button-keyboard {
-		width: 22px;
+		width: calc(100% / 11 - 12px);
 		height: 42px;
 		margin: 1px;
 		font-size: 16px;
@@ -176,7 +196,8 @@ body {
 	}
 
 	#enter-button {
-		width: 200px !important;
+		/*width: 200px !important;*/
+		width: calc(100% - 150px) !important;
 	}
 
 	.button-settings {
@@ -193,4 +214,147 @@ body {
 		display: block;
 		margin: 0 auto;
 	}
+
+	.button-share {
+		width: 40px;
+		height: 40px;
+	}
+
+	.button-share > img {
+		width: 20px;
+		height: 20px;
+	}
+}
+
+/*Modal window*/
+.modal-header h2 {
+    color: #555;  
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1;    
+    margin: 0;
+}
+
+.modal .btn-close {
+    color: #aaa;
+    cursor: pointer;
+    font-size: 30px;
+    text-decoration: none;
+    position: absolute;
+    right: 5px;
+    top: 0;
+}
+
+.modal .btn-close:hover {
+    color: red;
+}
+
+.modal-wrap:before {
+    content: "";
+    display: none;
+    background: rgba(0, 0, 0, .3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 101;
+}
+
+.modal-overlay {
+    bottom: 0;
+    display: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 102;
+}
+
+.modal-open:checked ~ .modal-wrap:before,
+.modal-open:checked ~ .modal-wrap .modal-overlay {
+    display: block;
+}
+
+.modal-open:checked ~ .modal-wrap .modal-dialog {
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    top: 20%;
+}
+
+.modal-dialog {
+    background: #fefefe;
+    border: none;
+    border-radius: 5px;
+    position: fixed;
+    width: 80%;
+    max-width: 500px;
+    left: 50%;
+    top: -100%;
+    -webkit-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+    -moz-box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+    box-shadow: 0 15px 20px rgba(0,0,0,.22),0 19px 60px rgba(0,0,0,.3);
+    -webkit-transform: translate(-50%, -500%);
+    -ms-transform: translate(-50%, -500%);
+    -o-transform: translate(-50%, -500%);
+    transform: translate(-50%, -500%);
+    -webkit-transition: -webkit-transform 0.4s ease-out;
+    -moz-transition: -moz-transform 0.4s ease-out;
+    -o-transition: -o-transform 0.4s ease-out;
+    transition: transform 0.4s ease-out;
+    z-index: 103;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body p {
+    margin: 0;
+}
+
+.modal-header,
+.modal-footer {
+    padding: 20px 20px;
+}
+
+.modal-header {
+    border-bottom: #eaeaea solid 1px;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.modal-footer {
+    border-top: #eaeaea solid 1px;
+    text-align: right;
+}
+
+.modal-body img { 
+    max-width: 100%;
+    height: auto;
+}
+
+.btn-primary {
+    background: #428bca;
+    border-color: #357ebd;
+    color: #fff;
+    border: none;
+    height: 30px;
+    font-size: 20px;
+}
+
+.btn-primary:hover{
+    background: #66A1D3;
+}
+
+#number_strings {
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	outline: none;
 }

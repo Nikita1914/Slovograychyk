@@ -20,7 +20,49 @@ let column_in_board = 0;
 let user_word = [];
 let hidden_word = '';
 let end_game = false;
-let lock_buttons = false
+let lock_buttons = false;
+let game_loaded_from_url = false;
+
+document.querySelector('.button-share').onclick = () => {
+	document.querySelector('.button-share').blur();
+
+	let number_entered_words = entered_words.length;
+
+	if (number_entered_words != 0){
+		if (number_entered_words === 1){
+			navigator.clipboard.writeText(get_url_from_game_state());
+			toast('Посилання на вашу загадку скопійовано в буфер обміну!');
+		} else {
+			if (number_entered_words === 6){
+				number_entered_words--;
+			}
+
+			document.getElementById('number_strings').min = '1';
+			document.getElementById('number_strings').max = String(number_entered_words);
+			document.getElementById('number_strings').value = String(number_entered_words);
+			document.querySelector('.modal-open').checked = true;
+		}
+	} else {
+		toast('Щоб скопіювати посилання, почніть відгадувати таємне слово.');
+	}
+}
+
+document.getElementById('copy-button').onclick = () => {
+	let number_strings = document.getElementById('number_strings').value;
+	let number_entered_words = entered_words.length;
+
+	if (number_entered_words === 6){
+		number_entered_words--;
+	}
+
+	if (number_strings != ''){
+		if (Number(number_strings) >= 1 && Number(number_strings) <= number_entered_words){
+			navigator.clipboard.writeText(get_url_from_game_state(number_strings=number_strings));
+			document.querySelector('.modal-open').checked = false;
+			toast('Посилання на вашу загадку скопійовано в буфер обміну!');
+		}
+	}
+}
 
 document.querySelectorAll('.button-keyboard').forEach(function(button) {
 	button.onclick = () => {
@@ -114,10 +156,12 @@ function word_entered() {
 				end_game = true;
 			} else {
 				if (line_in_board != 5){
-					line_in_board ++;
+					line_in_board++;
 					column_in_board = 0;
 					user_word = [];
-					save_game();
+
+					if (game_loaded_from_url != true)
+						save_game();
 				} else {
 					toast(`Ви програли. Таємне слово: ${hidden_word.join('')}.`);
 					clear_save_game();
@@ -217,7 +261,6 @@ function make_a_word(){
 		}
 	}
 
-	console.log('Таємне слово: ', hidden_word);
 	hidden_word = hidden_word.split('')
 }
 
@@ -245,12 +288,12 @@ function reset_game() {
 	column_in_board = 0;
 	user_word = [];
 	board = [[0, 0, 0, 0, 0],
-						[0, 0, 0, 0, 0],
-						[0, 0, 0, 0, 0],
-						[0, 0, 0, 0, 0],
-						[0, 0, 0, 0, 0],
-						[0, 0, 0, 0, 0]
-					 ];
+					 [0, 0, 0, 0, 0],
+					 [0, 0, 0, 0, 0],
+					 [0, 0, 0, 0, 0],
+					 [0, 0, 0, 0, 0],
+				   [0, 0, 0, 0, 0]
+					];
 	keyboard = {'Й':0, 'Ц':0, 'У':0, 'К':0, 'Е':0, 'Н':0, 'Г':0, 'Ш':0, 'Щ':0, 'З':0, 'Х':0,
 							'Ї':0, 'Ф':0, 'І':0, 'В':0, 'А':0, 'П':0, 'Р':0, 'О':0, 'Л':0, 'Д':0, 'Ж':0, 
 							'Є':0, 'Я':0, 'Ч':0, 'С':0, 'М':0, 'И':0, 'Т':0, 'Ь':0, 'Б':0, 'Ю':0};
@@ -389,7 +432,7 @@ function sync_keyboard() {
 				break;
 			case 2:
 				color = YELLOW_COLOR;
-				break;		
+				break;
 			case 3:
 				color = GREEN_COLOR;
 				break;
@@ -439,6 +482,63 @@ function clear_save_game(){
 	my_storage.clear();
 }
 
+function get_url_from_game_state(number_strings=null) {
+	let entered_words_for_url = [];
+
+	for (let i = 0; i < entered_words.length; i++) {
+		entered_words_for_url.push(entered_words[i].join(''));		
+	}
+
+	if (entered_words_for_url.length === 6){
+		entered_words_for_url.shift();
+	}
+
+	if (number_strings != null){
+		entered_words_for_url = entered_words_for_url.slice(0, number_strings);
+	}
+
+	let url = [].concat([hidden_word.join('')], entered_words_for_url).join(',');
+	let encode_url = [];
+
+	for (let i = 0; i < url.length; i++) {
+		encode_url.push(url[i].charCodeAt());
+	}
+
+	return window.location.href.replace(window.location.hash, '') + '#' + encode_url.join(',');
+}
+
+function set_game_state_from_url() {
+	let hash = window.location.hash.replace('#','').split(',');
+	let state_game = '';
+
+	for (let i = 0; i < hash.length; i++){
+		state_game = state_game + String.fromCharCode(Number(hash[i]));
+	}
+
+	state_game = state_game.split(',');
+
+	hidden_word = state_game[0].split('');
+	entered_words = state_game;
+	entered_words.shift();
+
+	for (let i = 0; i < entered_words.length; i++){
+		user_word = entered_words[i].split('');
+		entered_words[i] = entered_words[i].split('');
+
+		for (let j = 0; j < user_word.length; j++){
+			document.getElementById(`tile-${line_in_board}-${j}`).innerHTML = user_word[j].toUpperCase();
+		}
+
+		word_match_count();
+		line_in_board++;
+	}
+
+	user_word = [];
+
+	sync_board();
+	sync_keyboard();
+}
+
 function toggleFullScreen() {
   if (!document.fullscreenElement &&
       !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {
@@ -451,6 +551,8 @@ function toggleFullScreen() {
     } else if (document.documentElement.webkitRequestFullscreen) {      
       document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
+
+    document.querySelector('#fullscreen-button > img').src = 'images/fullscreen-exit.svg';
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -461,6 +563,8 @@ function toggleFullScreen() {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
+
+    document.querySelector('#fullscreen-button > img').src = 'images/fullscreen.svg';
   }
 }
 
@@ -471,10 +575,9 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 }
 
 
-let game_loaded = load_game()
-
-if (game_loaded == false){
+if (window.location.hash.replace('#', '') != ''){
+	set_game_state_from_url();
+	game_loaded_from_url = true;
+} else if (load_game() == false){
 	make_a_word();
-} else {
-	console.log('Завантажене слово:', hidden_word.join(''));
 }

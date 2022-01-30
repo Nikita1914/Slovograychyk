@@ -7,7 +7,6 @@
 
 	<link rel="stylesheet" type="text/css" href="style.css">
 
-
 	<link href="toast/toast.min.css" rel="stylesheet">
 	<script src="toast/toast.min.js"></script>
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
@@ -30,7 +29,6 @@
 				<div class="title-letter-small" id="title-letter-5">И</div>
 				<div class="title-letter-small" id="title-letter-6">К</div>
 			</div>
-				<!-- <button class="share-button"><img src="images/share.svg" alt="Share"></button> -->
 		</div>
 
 		<hr>
@@ -125,6 +123,27 @@
 			<br>
 			<button class="button-settings" id="fullscreen-button"><img src="images/fullscreen.svg" alt="ПЕ"></button>
 		</div>
+	</div>
+
+	<button class="button-share"><img src="images/share.svg" alt="Поділитися"></button>
+
+	<div class="modal">
+	  <input class="modal-open" id="modal-1" type="checkbox" hidden>
+	  <div class="modal-wrap" aria-hidden="true" role="dialog">
+	    <label class="modal-overlay" for="modal-1"></label>
+	    <div class="modal-dialog">
+	      <div class="modal-header">
+	        <h2>Скопіювати посилання на загадку</h2>
+	        <label class="btn-close" for="modal-1" aria-hidden="true">×</label>
+	      </div>
+	      <div class="modal-body">
+	        <p>Скількі слів буде у вашій загадці? <input type="number" id="number_strings"></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button class="btn-primary" id="copy-button">Скопіювати!</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 	<script src="words.js"></script>
