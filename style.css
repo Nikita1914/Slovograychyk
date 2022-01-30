@@ -344,6 +344,7 @@ body {
     border-color: #357ebd;
     color: #fff;
     border: none;
+    border-radius: 10px 10px 10px 10px;
     height: 30px;
     font-size: 20px;
 }

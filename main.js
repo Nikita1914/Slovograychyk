@@ -1,7 +1,7 @@
-const WHITE_COLOR = 'white'
-const GRAY_COLOR = 'gray'
-const YELLOW_COLOR = 'yellow'
-const GREEN_COLOR = 'green'
+const WHITE_COLOR = 'white';
+const GRAY_COLOR = 'gray';
+const YELLOW_COLOR = 'yellow';
+const GREEN_COLOR = 'green';
 const TILE_ROTATE_TIME = 2;
 
 let board = [[0, 0, 0, 0, 0],
@@ -273,6 +273,11 @@ function check_user_word(word) {
 }
 
 function reset_game() {
+	if (game_loaded_from_url === true){
+		window.location.href = window.location.href.replace(window.location.hash, '');
+		return;
+	}
+
 	make_a_word();
 
 	document.querySelectorAll('.button-keyboard').forEach((button) => {
@@ -508,35 +513,42 @@ function get_url_from_game_state(number_strings=null) {
 }
 
 function set_game_state_from_url() {
-	let hash = window.location.hash.replace('#','').split(',');
-	let state_game = '';
+	try {
+		let hash = window.location.hash.replace('#','').split(',');
+		let state_game = '';
 
-	for (let i = 0; i < hash.length; i++){
-		state_game = state_game + String.fromCharCode(Number(hash[i]));
-	}
-
-	state_game = state_game.split(',');
-
-	hidden_word = state_game[0].split('');
-	entered_words = state_game;
-	entered_words.shift();
-
-	for (let i = 0; i < entered_words.length; i++){
-		user_word = entered_words[i].split('');
-		entered_words[i] = entered_words[i].split('');
-
-		for (let j = 0; j < user_word.length; j++){
-			document.getElementById(`tile-${line_in_board}-${j}`).innerHTML = user_word[j].toUpperCase();
+		for (let i = 0; i < hash.length; i++){
+			state_game = state_game + String.fromCharCode(Number(hash[i]));
 		}
 
-		word_match_count();
-		line_in_board++;
+		state_game = state_game.split(',');
+
+		hidden_word = state_game[0].split('');
+		entered_words = state_game;
+		entered_words.shift();
+
+		for (let i = 0; i < entered_words.length; i++){
+			user_word = entered_words[i].split('');
+			entered_words[i] = entered_words[i].split('');
+
+			for (let j = 0; j < user_word.length; j++){
+				document.getElementById(`tile-${line_in_board}-${j}`).innerHTML = user_word[j].toUpperCase();
+			}
+
+			word_match_count();
+			line_in_board++;
+		}
+
+		user_word = [];
+
+		sync_board();
+		sync_keyboard();
+	} catch (error){
+		toast('Сталася помилка при завантаженні загадки.');
+		setTimeout(() => {
+			window.location.href = window.location.href.replace(window.location.hash, '');
+		}, 2000);
 	}
-
-	user_word = [];
-
-	sync_board();
-	sync_keyboard();
 }
 
 function toggleFullScreen() {
