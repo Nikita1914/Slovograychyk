@@ -24,6 +24,8 @@ let game_loaded_from_url = false;
 set_value_variables_defoult();
 
 document.querySelector('.button-share').onclick = () => {
+	document.querySelector('.button-share').blur();
+	
 	let number_entered_words = entered_words.length;
 
 	if (number_entered_words != 0){
