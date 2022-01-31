@@ -27,7 +27,9 @@ document.querySelector('.button-share').onclick = () => {
 	let number_entered_words = entered_words.length;
 
 	if (number_entered_words != 0){
-		if (number_entered_words === 1){
+		if (number_entered_words === 1 && end_game === true) {
+			toast('Ви не можете скопіювати посилання на вашу загадку, тому що ви вгадали таємне слово з першого ходу.')
+		} else if (number_entered_words === 1){
 			navigator.clipboard.writeText(get_url_from_game_state());
 			toast('Посилання на вашу загадку скопійовано в буфер обміну!');
 		} else {
