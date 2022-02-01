@@ -198,6 +198,11 @@ body {
 		border-radius: 10px 10px 10px 10px;
 	}
 
+	#svg-backspace {
+		width: 24px;
+		height: 24px;
+	}
+
 	#enter-button {
 		width: 200px !important;
 		text-align: center;
@@ -213,7 +218,6 @@ body {
 		width: 40px;
 		height: 40px;
 	}
-}
 
 @media (max-width: 1089px){
 	.tiles-line .tile{
@@ -270,6 +274,7 @@ body {
 
 	#svg-backspace {
 		width: 14px;
+		height: 14px;
 	}
 
 	#enter-button {
