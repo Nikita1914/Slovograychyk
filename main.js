@@ -604,16 +604,18 @@ function toggleFullScreen() {
   }
 }
 
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-	document.getElementById('fullscreen-button').onclick = toggleFullScreen;
-} else {
-	document.getElementById('fullscreen-button').style.display = 'none'
-}
+document.addEventListener('DOMContentLoaded', () => {
+	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		document.getElementById('fullscreen-button').onclick = toggleFullScreen;
+	} else {
+		document.getElementById('fullscreen-button').style.display = 'none'
+	}
 
 
-if (window.location.hash.replace('#', '') != ''){
-	set_game_state_from_url();
-	game_loaded_from_url = true;
-} else if (load_game() == false){
-	make_a_word();
-}
+	if (window.location.hash.replace('#', '') != ''){
+		set_game_state_from_url();
+		game_loaded_from_url = true;
+	} else if (load_game() == false){
+		make_a_word();
+	}
+})
