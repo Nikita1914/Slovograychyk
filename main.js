@@ -1,14 +1,9 @@
-const WHITE_COLOR = 'white';
-const GRAY_COLOR = 'gray';
-const YELLOW_COLOR = 'yellow';
-const GREEN_COLOR = 'green';
 const TILE_ROTATE_TIME = 2;
 const ALLOWED_KEYS = ['Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г',
 											'Ш', 'Щ', 'З', 'Х', 'Ї', 'Ф', 'І', 
 											'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 
 											'Ж', 'Є', 'Я', 'Ч', 'С', 'М', 'И',
 											'Т', 'Ь', 'Б', 'Ю', 'BACKSPACE', 'ENTER'];
-
 let board = null;
 let keyboard = null;
 let entered_words = null;
@@ -83,7 +78,6 @@ document.addEventListener('keydown', (event) => {
 
 	if (end_game){
 		end_game = false;
-		console.log();
 		reset_game();
 	} else {
 		key = event.key.toUpperCase();
@@ -220,7 +214,7 @@ function word_match_count() {
 
 	// Match yellow and gray letter
 	for(let i = 0; i < hidden_word.length; i++){
-		count_yellow = count_yellow_letter(user_word[i]);
+		count_yellow = count_yellow_letter(user_word[i], hidden_word);
 
 		if (count_yellow.length > 0) {
 			if (get_color_tile(line_in_board, i) != 'green'){
@@ -248,12 +242,12 @@ function word_match_count() {
 	return number_of_coincidences;
 }
 
-function count_yellow_letter(letter){
+function count_yellow_letter(letter, word){
 	let index_list = [];
 	letter = letter.toLowerCase();
 
-	for(let i = 0; i < hidden_word.length; i++){
-		if (hidden_word[i] === letter)
+	for(let i = 0; i < word.length; i++){
+		if (word[i] === letter)
 			index_list.push(i);
 	}
 
@@ -290,7 +284,7 @@ function check_user_word(word) {
 
 function reset_game() {
 	if (game_loaded_from_url === true){
-		window.location.href = window.location.href.replace(window.location.hash, '');
+		window.location.href = window.location.href.replace(window.location.search, '');
 		return;
 	}
 
@@ -345,7 +339,7 @@ function get_color_tile(tile_row, tile_column) {
 	color =  board[tile_row][tile_column];
 
 	switch (color){
-		case 0: 
+		case 0:
 			color = 'white';
 			break;
 		case 1:
@@ -533,12 +527,12 @@ function get_url_from_game_state(number_strings=null) {
 		encode_url.push(url[i].charCodeAt());
 	}
 
-	return 'Словограйчик - відгадай таємне слово.\n\nСпробуйте відгадати мою загадку.\n\n#словограйчик\n\n' + window.location.href.replace(window.location.hash, '') + '#' + encode_url.join(',');
+	return 'Словограйчик - відгадай таємне слово.\n\nСпробуйте відгадати мою загадку.\n\n#словограйчик\n\n' + window.location.href.replace(window.location.search.replace('?puzzle=', '') , '') + '?puzzle=' + encode_url.join(',');
 }
 
 function set_game_state_from_url() {
 	try {
-		let hash = window.location.hash.replace('#','').split(',');
+		let hash = window.location.search.replace('?puzzle=', '').split(',');
 		let state_game = '';
 
 		for (let i = 0; i < hash.length; i++){
@@ -570,7 +564,7 @@ function set_game_state_from_url() {
 	} catch (error){
 		toast('Сталася помилка при завантаженні загадки.');
 		setTimeout(() => {
-			window.location.href = window.location.href.replace(window.location.hash, '');
+			window.location.href = window.location.href.replace(window.location.search, '');
 		}, 2000);
 	}
 }
@@ -612,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-	if (window.location.hash.replace('#', '') != ''){
+	if (window.location.search.replace('?puzzle=', '') != ''){
 		set_game_state_from_url();
 		game_loaded_from_url = true;
 	} else if (load_game() == false){
