@@ -18,8 +18,25 @@ let game_loaded_from_url = false;
 
 set_value_variables_defoult();
 
-document.querySelector('.button-share').onclick = () => {
-	document.querySelector('.button-share').blur();
+document.getElementById('open-params').onclick = () => {
+	show_params();
+}
+
+document.getElementById('params-overlay').onclick = () => {
+	hide_params();
+}
+
+document.getElementById('manual-button').onclick = () => {
+	document.getElementById('manual').style.display = 'block';
+	hide_params();
+}
+
+document.getElementById('hide-manual-button').onclick = () => {
+	document.getElementById('manual').style.display = 'none';
+}
+
+document.getElementById('share-button').onclick = () => {
+	document.getElementById('share-button').blur();
 	
 	let number_entered_words = entered_words.length;
 
@@ -71,7 +88,6 @@ document.querySelectorAll('.button-keyboard').forEach(function(button) {
 	}
 });
 
-
 document.addEventListener('keydown', (event) => {
 	if (lock_buttons)
 		return
@@ -107,6 +123,18 @@ document.querySelectorAll('.tile').forEach((tile) => {
 		}
 	}
 });
+
+function show_params(){
+	document.getElementById('params-panel').style.display = 'block';
+	document.getElementById('params-overlay').style.display = 'block';
+	document.getElementById('open-params').style.display = 'none';
+}
+
+function hide_params(){
+	document.getElementById('params-panel').style.display = 'none';
+	document.getElementById('params-overlay').style.display = 'none';
+	document.getElementById('open-params').style.display = 'block';
+}
 
 function set_value_variables_defoult(){
 	line_in_board = 0;
@@ -515,9 +543,7 @@ function get_url_from_game_state(number_strings=null) {
 	}
 
 	if (number_strings != null){
-		console.log(number_strings, entered_words_for_url);
 		entered_words_for_url = entered_words_for_url.slice(0, number_strings);
-		console.log(entered_words_for_url);
 	}
 
 	let url = [].concat([hidden_word.join('')], entered_words_for_url).join(',');
@@ -578,7 +604,7 @@ function toggleFullScreen() {
       document.documentElement.msRequestFullscreen();
     } else if (document.documentElement.mozRequestFullScreen) {
       document.documentElement.mozRequestFullScreen();
-    } else if (document.documentElement.webkitRequestFullscreen) {      
+    } else if (document.documentElement.webkitRequestFullscreen) {
       document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
 
@@ -599,12 +625,7 @@ function toggleFullScreen() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-		document.getElementById('fullscreen-button').onclick = toggleFullScreen;
-	} else {
-		document.getElementById('fullscreen-button').style.display = 'none'
-	}
-
+	document.getElementById('fullscreen-button').onclick = toggleFullScreen;
 
 	if (window.location.search.replace('?puzzle=', '') != ''){
 		set_game_state_from_url();

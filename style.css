@@ -9,13 +9,7 @@ html {
   user-select: none;
 }
 
-body {
-	background-image: url(images/bg.webp);
-}
-
-.game-content {
-	box-sizing: border-box;
-}
+body {background-image: url(images/bg.webp);}
 
 .title-game {
 	text-align: center;
@@ -55,21 +49,10 @@ body {
 	text-align: center;
 }
 
-.white-tile {
-	background-color: white !important;
-}
-
-.gray-tile {
-	background-color: gray !important;
-}
-
-.yellow-tile {
-	background-color: yellow !important;
-}
-
-.green-tile {
-	background-color: green !important;
-}
+.white-tile {background-color: white !important;}
+.gray-tile {background-color: gray !important;}
+.yellow-tile {background-color: yellow !important;}
+.green-tile {background-color: green !important;}
 
 .button-keyboard {
 	cursor: pointer;
@@ -77,48 +60,14 @@ body {
 	text-align: center;
 }
 
-.button-keyboard:active {
-	opacity: .3;
-}
+.button-keyboard:active {opacity: .3;}
 
-.button-keyboard:focus {
-    outline: none;
-}
+.button-keyboard:focus {outline: none;}
 
-.white-button-keyboard {
-	background-color: white !important;
-}
-
-.gray-button-keyboard {
-	background-color: gray !important;
-}
-
-.yellow-button-keyboard {
-	background-color: yellow !important;
-}
-
-.green-button-keyboard {
-	background-color: green !important;
-}
-
-.board {
-	box-sizing: inherit;
-}
-
-.button-share {
-	display: block;
-	border-radius: 40px 40px 40px 40px;
-	border: none;
-	position: fixed;
-	right: 5px;
-	bottom: 5px;
-	outline: none;
-	cursor: pointer;
-}
-
-.button-share:hover {
-	background-color: #cfcfcf;
-}
+.white-button-keyboard {background-color: white !important;}
+.gray-button-keyboard {background-color: gray !important;}
+.yellow-button-keyboard {background-color: yellow !important;}
+.green-button-keyboard {background-color: green !important;}
 
 #manual {
 	display: none;
@@ -137,10 +86,7 @@ body {
 	font-size: 40px;
 }
 
-#manual > h3 {
-	font-size: 20px;
-}
-
+#manual > h3 {font-size: 20px;}
 
 .btn-primary {
     background: #428bca;
@@ -153,15 +99,18 @@ body {
     cursor: pointer;
 }
 
-.btn-primary:hover{
-    background: #66A1D3;
+@media (any-hover: hover){
+	.modal .btn-close:hover {color: red;}
+
+    #open-params:hover {background-color: #cfcfcf;}
+
+	.btn-primary:hover{background: #66A1D3;}
+
+	.params-button:hover {background-color: #cfcfcf;}
 }
 
-
 @media (min-width: 1090px) {
-	.tiles {
-		max-width: 360px;
-	}
+	.tiles {max-width: 360px;}
 
 	.tiles-line .tile {
 		width: 66px;
@@ -209,23 +158,18 @@ body {
 		margin-left: 2%;
 	}
 
-	.button-share {
+	#open-params {
 		width: 80px;
 		height: 80px;
 	}
 
-	.button-share > img {
+	#open-params > img {
 		width: 40px;
 		height: 40px;
 	}
 }
 
 @media (max-width: 1089px){
-	.tiles-line .tile{
-		width: 60px;
-		float: left;
-	}
-
 	.title-letter {
 		width: 20px;
 		height: 20px;
@@ -233,39 +177,31 @@ body {
 		padding: 16px;
 	}
 
-	.tiles {
-		max-width: 320px;
+	.tiles-line {clear: both;}
+
+	.board, .tiles {
 		margin-left: auto;
 		margin-right: auto;
 	}
 
-	.tiles::after {
-		display: table;
-		clear: both;
-		content: '';
-	}
-
 	.tile {
 		margin: 2px;
-		min-height: 40px;
-		font-size: 30px;
+		height: calc(100vh / 6 - 60px);
+		font-size: 3rem;
+		width: calc(100% / 5 - 4px);
+		float: left;
 		background-color: white;
 	}
 
 	.keyboard {
 		clear: both;
 		text-align: center;
-		position: absolute;
-		left: 0; 
-  		right: 0; 
 		margin-left: auto; 
   		margin-right: auto; 
-  		bottom: 10px;
-		margin-top: 14px;
 	}
 
 	.button-keyboard {
-		width: calc(100% / 11 - 12px);
+		width: calc(100% / 11 - 6px);
 		height: 42px;
 		margin: 1px;
 		font-size: 16px;
@@ -278,9 +214,7 @@ body {
 		height: 14px;
 	}
 
-	#enter-button {
-		width: calc(100% - 150px) !important;
-	}
+	#enter-button {width: calc(100% - 150px) !important;}
 
 	.button-settings {
 		width: 50px;
@@ -292,20 +226,62 @@ body {
 		text-align: center;
 	}
 
-	#fullscreen-button > img {
-		display: block;
-		margin: 0 auto;
-	}
-
-	.button-share {
+	#open-params {
 		width: 40px;
 		height: 40px;
 	}
 
-	.button-share > img {
+	#open-params > img {
 		width: 20px;
 		height: 20px;
 	}
+}
+
+/*Params panel*/
+#open-params {
+	display: block;
+	border-radius: 40px 40px 40px 40px;
+	border: none;
+	position: fixed;
+	right: 5px;
+	bottom: 5px;
+	outline: none;
+	cursor: pointer;
+}
+
+#params-panel{
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	width: 100%;
+	height: 60px;
+	display: none;
+	text-align: center;
+	background-image: url('images/bg.webp');
+}
+
+#params-overlay{
+    display: none;
+    position: fixed;
+	bottom: 60px;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.params-button{
+	background-color: white;
+	height: 100%;
+	width: 25%;
+	border-radius: 20px 20px 20px 20px;
+	outline: none;
+	border: none;
+}
+
+.params-button > img{
+	width: 50%;
+	height: 50%;
 }
 
 /*Modal window*/
@@ -325,10 +301,6 @@ body {
     position: absolute;
     right: 5px;
     top: 0;
-}
-
-.modal .btn-close:hover {
-    color: red;
 }
 
 .modal-wrap:before {
@@ -355,7 +327,7 @@ body {
 
 .modal-open:checked ~ .modal-wrap:before,
 .modal-open:checked ~ .modal-wrap .modal-overlay {
-    display: block;
+	display: block;
 }
 
 .modal-open:checked ~ .modal-wrap .modal-dialog {

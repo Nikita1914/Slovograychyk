@@ -118,16 +118,24 @@
 			<button class="button-keyboard" data-letter="Б">Б</button>
 			<button class="button-keyboard" data-letter="Ю">Ю</button>
 			<button class="button-keyboard" id="clear-button" data-letter="Backspace">
-				<img id="svg-backspace" src="images/backspace.svg"	alt="<">
+				<img id="svg-backspace" src="images/backspace.svg"	alt="Стерти">
   			</button>
   			<br>
 			<button class="button-keyboard" id="enter-button" data-letter="Enter">ГРАТИ!</button>
 			<br>
-			<button class="button-settings" id="fullscreen-button"><img src="images/fullscreen.svg" alt="ПЕ"></button>
 		</div>
 	</div>
 
-	<button class="button-share"><img src="images/share.svg" alt="Поділитися"></button>
+	<div id="params">
+		<div id="params-overlay"></div>
+		<button id="open-params"><img src="images/more.svg" alt="Більше"></button>
+
+		<div id="params-panel">
+			<button class="params-button" id="fullscreen-button"><img src="images/fullscreen.svg" alt="Повний екран"></button>
+			<button class="params-button" id="share-button"><img src="images/share.svg" alt="Поділитися"></button>
+			<button class="params-button" id="manual-button"><img src="images/manual.svg" alt="Довідка"></button>
+		</div>
+	</div>
 
 	<div class="modal">
 	  <input class="modal-open" id="modal-1" type="checkbox" hidden>
@@ -149,9 +157,12 @@
 	</div>
 
 	<div id="manual">
-		<h1>Довідка</h1>
-		<h3>Довідка.</h3>
-		<button class="btn-primary" id="button-exit-instructions">ГРАТИ!</button>
+		<h1>Словограйчик. Правила гри.</h1>
+		<h3>Відгадайте таємне слово за шість спроб.
+			<br>
+			<br>
+			Кожного разу Ви маєте написати справжнє слово з п'яти літер. Натисніть кнопку "ГРАТИ!" щоб підтвердити свою спробу. Таємне слово є іменником у називному відмінку. Після каждої спроби колір клітонок змінится і покаже наскількі ваша відгатка була близькою до таємного слова.</h3>
+		<button class="btn-primary" id="hide-manual-button">ГРАТИ!</button>
 	</div>
 
 	<script src="words.js"></script>
