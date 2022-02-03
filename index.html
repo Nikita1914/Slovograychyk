@@ -11,6 +11,8 @@
 
 	<link href="toast/toast.min.css" rel="stylesheet">
 	<script src="toast/toast.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+      rel="stylesheet">
 	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -118,7 +120,7 @@
 			<button class="button-keyboard" data-letter="Б">Б</button>
 			<button class="button-keyboard" data-letter="Ю">Ю</button>
 			<button class="button-keyboard" id="clear-button" data-letter="Backspace">
-				<img id="svg-backspace" src="images/backspace.svg"	alt="Стерти">
+				<img id="svg-backspace" src="images/backspace.svg" alt="Стерти">
   			</button>
   			<br>
 			<button class="button-keyboard" id="enter-button" data-letter="Enter">ГРАТИ!</button>
@@ -157,11 +159,45 @@
 	</div>
 
 	<div id="manual">
-		<h1>Словограйчик. Правила гри.</h1>
-		<h3>Відгадайте таємне слово за шість спроб.
-			<br>
-			<br>
-			Кожного разу Ви маєте написати справжнє слово з п'яти літер. Натисніть кнопку "ГРАТИ!" щоб підтвердити свою спробу. Таємне слово є іменником у називному відмінку. Після каждої спроби колір клітонок змінится і покаже наскількі ваша відгатка була близькою до таємного слова.</h3>
+		<h1>Словограйчик. Правила гри.</h1>		
+		<hr>
+		<h3>Відгадайте таємне слово за шість спроб.</h3>
+		<h3>Кожного разу ви маєте написати справжнє слово з п'яти літер. Натисніть кнопку "ГРАТИ!" щоб підтвердити свою спробу.</h3>
+		<h3>Таємне слово є іменником у називному відмінку.</h3>
+		<h3>Після каждої спроби колір клітонок змінится і покаже наскількі ваша відгатка була близькою до таємного слова.</h3>
+		
+		<hr>
+		
+		<h1>Приклади:</h1>
+		<h3>Букви Ю зовсім немає у слові.</h3>		
+		<div class="tiles-for-example">
+			<div class="tile-for-example gray-tile-for-example">Л</div>
+			<div class="tile-for-example gray-tile-for-example">Ю</div>
+			<div class="tile-for-example gray-tile-for-example">Б</div>
+			<div class="tile-for-example gray-tile-for-example">О</div>
+			<div class="tile-for-example gray-tile-for-example">В</div>
+		</div>
+		<br>
+		<h3>Буква І є в слові і знаходиться на правильному місці.</h3>
+		<div class="tiles-for-example">
+			<div class="tile-for-example gray-tile-for-example">М</div>
+			<div class="tile-for-example green-tile-for-example">І</div>
+			<div class="tile-for-example gray-tile-for-example">С</div>
+			<div class="tile-for-example gray-tile-for-example">Т</div>
+			<div class="tile-for-example gray-tile-for-example">О</div>
+		</div>
+		<br>
+		<h3>Буква К є в слові, але знаходиться на іншому місці.</h3>
+		<div class="tiles-for-example">
+			<div class="tile-for-example gray-tile-for-example">С</div>
+			<div class="tile-for-example yellow-tile-for-example">К</div>
+			<div class="tile-for-example gray-tile-for-example">Е</div>
+			<div class="tile-for-example gray-tile-for-example">Л</div>
+			<div class="tile-for-example gray-tile-for-example">Я</div>
+		</div>
+		<br>
+		<h3>Під час гри, натиснувши на відповідний колір у вашому слові, ви отримаєте підказку - нагадування цих правил.</h3>
+		<hr>
 		<button class="btn-primary" id="hide-manual-button">ГРАТИ!</button>
 	</div>
 

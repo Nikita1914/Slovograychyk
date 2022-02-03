@@ -104,6 +104,7 @@ document.addEventListener('keydown', (event) => {
 
 document.querySelectorAll('.tile').forEach((tile) => {
 	tile.onclick = () => {
+		let letter_states_dict = {0:'перша', 1:'друга', 2:'третя', 3:'четверта', 4:'остання'};
 		let tile_id = tile.id.replace('tile-', '').split('-');
 		let state_tile = board[tile_id[0]][tile_id[1]];
 		let letter = tile.innerHTML;
@@ -114,7 +115,7 @@ document.querySelectorAll('.tile').forEach((tile) => {
 					toast(`У таємному слові нема букви "${letter.toUpperCase()}".`);
 					break;
 				case 2:
-					toast(`Буква "${letter.toUpperCase()}" є у таємному слові, але не на цій позиції.`);
+					toast(`Буква "${letter.toUpperCase()}" є у таємному слові, але не ${letter_states_dict[tile_id[1]]}.`);
 					break;
 				case 3:
 					toast(`Буква "${letter.toUpperCase()}" є у таємному слові, і стоїть на вірній позиції.`);
@@ -317,12 +318,12 @@ function reset_game() {
 	}
 
 	document.querySelectorAll('.button-keyboard').forEach((button) => {
-		reset_color_button(button);
+		button.style.background = 'var(--white-button)';
 		button.classList.add('white-button-keyboard');
 	});
 
 	document.querySelectorAll('.tile').forEach((tile) => {
-		setTimeout(() => {reset_color_tile(tile); tile.classList.add('white-tile'); tile.innerHTML = '';}, 1000)
+		setTimeout(() => {tile.style.background = 'var(--white-tile)'; tile.innerHTML = '';}, 1000)
 		rotate_tile(tile);
 	});
 
@@ -384,33 +385,25 @@ function get_color_tile(tile_row, tile_column) {
 	return color;
 }
 
-function reset_color_tile(tile) {
-	tile.classList.remove('white-tile');
-	tile.classList.remove('gray-tile');
-	tile.classList.remove('yellow-tile');
-	tile.classList.remove('green-tile');
-}
-
 function sync_board(){
 	let tile = null;
 
 	for (let i = 0; i < board.length; i++){
 		for (let j = 0; j < board[i].length; j++){
 			tile = document.getElementById(`tile-${i}-${j}`)
-			reset_color_tile(tile);
 
 			switch (board[i][j]){
 				case 0: 
-					tile.classList.add('white-tile');
+					tile.style.background = 'var(--white-tile)';
 					break;
 				case 1:
-					tile.classList.add('gray-tile');
+					tile.style.background = 'var(--gray-tile)';
 					break;
 				case 2:
-					tile.classList.add('yellow-tile');
+					tile.style.background = 'var(--yellow-tile)';
 					break;
 				case 3:
-					tile.classList.add('green-tile');
+					tile.style.background = 'var(--green-tile)';
 					break;
 			}
 		}
@@ -457,33 +450,25 @@ function get_color_button(letter) {
 	return color;
 }
 
-function reset_color_button(button) {
-	button.classList.remove('white-button-keyboard');
-	button.classList.remove('gray-button-keyboard');
-	button.classList.remove('yellow-button-keyboard');
-	button.classList.remove('green-button-keyboard');
-}
-
 function sync_keyboard() {
 	let color = null;
 	let button = null;
 
 	for(let key in keyboard){
 		button = document.querySelector(`.button-keyboard[data-letter=${key.toUpperCase()}]`);
-		reset_color_button(button);
 
 		switch (keyboard[key.toUpperCase()]){
 			case 0: 
-				button.classList.add('white-button-keyboard');
+				button.style.background = 'var(--white-button)';
 				break;
 			case 1:
-				button.classList.add('gray-button-keyboard');
+				button.style.background = 'var(--gray-button)';
 				break;
 			case 2:
-				button.classList.add('yellow-button-keyboard');
+				button.style.background = 'var(--yellow-button)';
 				break;
 			case 3:
-				button.classList.add('green-button-keyboard');
+				button.style.background = 'var(--green-button)';
 				break;
 			}
 	}
