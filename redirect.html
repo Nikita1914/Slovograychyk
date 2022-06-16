@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Адреса перенесена</title>
+</head>
+<body>
+	<h1>"Словограйчик" був перенесений на іншу адресу.</h1>
+	<h3 id="redirect_message">Переадресація через <b id="seconds"></b> сек.</h3>
+	<script>
+		let seconds_count_element = document.getElementById('seconds')
+		let redirect_message_element = document.getElementById('redirect_message')
+		let seconds_count = 5
+		let new_location = 'https://slovograychyk.netlify.app'
+
+		window.onload = function () {
+			let interval_id = setInterval(() => {
+				if (seconds_count === 0) {
+					clearInterval(interval_id)
+					redirect_message.innerHTML = 'Переадресація...'
+					window.location.href = new_location + window.location.search
+				}
+
+				seconds_count_element.innerHTML = seconds_count
+				seconds_count--
+			}, 1000)
+		}
+	</script>
+</body>
+</html>
